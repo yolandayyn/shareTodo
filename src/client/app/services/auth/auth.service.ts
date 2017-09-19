@@ -17,7 +17,8 @@ export class Auth {
                     throw new Error(error);
                 }
                 // Set Profile
-                localStorage.setItem('profile', profile);
+                console.log(profile);
+                localStorage.setItem('profile', JSON.stringify(profile));
                 // Set Token
                 localStorage.setItem('id_token', authResult.idToken);
             })

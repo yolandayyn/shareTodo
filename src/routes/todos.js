@@ -32,8 +32,6 @@ router.get('/todo/:id', function(req, res, next){
 // Save Todo
 router.post('/todo', function(req, res, next){
     var todo = req.body;
-    console.log("this is");
-    console.log(todo);
     if(!todo.text || !(todo.isCompleted + '')){
         res.status(400);
         res.json({
@@ -62,6 +60,15 @@ router.put('/todo/:id', function(req, res, next){
     if(todo.text){
         updObj.text = todo.text;
     }
+
+    if(todo.isPublic) {
+      updObj.isPublic = todo.isPublic;
+    }
+
+    if(todo.uid) {
+      updObj.uid = todo.uid;
+    }
+
 
     if(!updObj){
         res.status(400);

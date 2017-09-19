@@ -20,6 +20,7 @@ export class TodosComponent implements OnInit {
     this.todos = [];
     var pro = JSON.parse(localStorage.getItem('profile'));
     var uid = pro.email;
+    console.log(uid);
     this.email = uid;
     this._todoService.getTodos(uid)
       .subscribe(todos => {
