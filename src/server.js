@@ -20,6 +20,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/', index);
 app.use('/api/v1/', todos);
 
-app.listen(5000, function(){
-    console.log('Server started on port 9000...');
+app.listen(3004, function(){
+    console.log('Server started on port 3004...');
 });

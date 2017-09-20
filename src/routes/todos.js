@@ -3,17 +3,55 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var db = mongojs('mongodb://xx254:xin1994_@ds135364.mlab.com:35364/todos',['todos']);
 
+var redisClient = require('redis').createClient;
+var redis = redisClient(6379, 'localhost');
+
+
+// redis.get(title, function (err, reply) {
+//     if (err) callback(null);
+//     else if (reply) //Book exists in cache
+//     callback(JSON.parse(reply));
+//     else {
+//         //Book doesn't exist in cache - we need to query the main database
+//         db.collection('text').findOne({
+//             title: title
+//         }, function (err, doc) {
+//             if (err || !doc) callback(null);
+//             else {\\Book found in database, save to cache and
+//                 return to client
+//                 redis.set(title, JSON.stringify(doc), function () {
+//                     callback(doc);
+//                 });
+//             }
+//         });
+//     }
+// });
+
+
 // Get Todos
 router.get('/todos/:uid', function(req, res, next){
-    db.todos.find({
-      uid: req.params.uid
-    }, function(err, todos){
-        if(err){
-           res.send(err);
-        } else {
-           res.json(todos);
+    var uid = req.params.uid;
+    
+    redis.get(uid, function (err, reply) {
+        if (err) callback(null);
+        else if (reply) //Book exists in cache
+        callback(JSON.parse(reply));
+        else {
+            db.todos.find({
+                uid: req.params.uid
+              }, function(err, todoItems){
+                  console.log(todoItems);
+                  for(var i=0; i<todoItems.length; i++){
+                    var singleItem = todoItems[i];
+                    redis.hset(uid, singleItem["_id"].toString(), JSON.stringify(singleItem), redis.print);
+                
+                  }
+                  res.json(todoItems);
+              });
+              
         }
-    });
+    })
+    
 });
 
 // Get Single Todo

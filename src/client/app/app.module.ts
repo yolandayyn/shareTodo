@@ -2,7 +2,7 @@ import { NgModule }      from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import {routing, appRoutingProviders} from './app.routing';
-import {AUTH_PROVIDERS} from 'angular2-jwt';
+import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { HttpModule } from '@angular/http';
 
 
