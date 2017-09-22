@@ -1,0 +1,25 @@
+<h3>My friends</h3>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-xs-3">
+        <input class="form-control input-sm" placeholder="Add a new friend..." type="text" #newFriend>
+      </div>
+      <div class="col-xs-3">
+        <input type="button" (click)="addFriend($event, newFriend)" class="btn btn-default btn-sm" value="Submit">
+      </div>
+    </div>
+  </div>
+
+  <div class="friend-list">
+    <div *ngFor="let friend of friendList">
+      <div class="row">
+        <div class="col-xs-3">
+          <li>{{friend}}</li>
+        </div>
+        <div class="col-xs-3">
+          <input type="button" (click)="deleteFriend(friend)" class="btn btn-danger btn-sm" value="Delete">
+        </div>
+      </div>
+    </div>
+  </div>

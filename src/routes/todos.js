@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://xx254:xin1994_@ds135364.mlab.com:35364/todos',['todos']);
+var db = mongojs('mongodb://awesomeAdmin:appveryawesome@ds139954.mlab.com:39954/sharetodo',['todos']);
 
 var redisClient = require('redis').createClient;
 var redis = redisClient(6379, 'localhost');
@@ -31,7 +31,7 @@ var redis = redisClient(6379, 'localhost');
 // Get Todos
 router.get('/todos/:uid', function(req, res, next){
     var uid = req.params.uid;
-    
+
     redis.get(uid, function (err, reply) {
         if (err) callback(null);
         else if (reply) //Book exists in cache
@@ -44,14 +44,14 @@ router.get('/todos/:uid', function(req, res, next){
                   for(var i=0; i<todoItems.length; i++){
                     var singleItem = todoItems[i];
                     redis.hset(uid, singleItem["_id"].toString(), JSON.stringify(singleItem), redis.print);
-                
+
                   }
                   res.json(todoItems);
               });
-              
+
         }
     })
-    
+
 });
 
 // Get Single Todo

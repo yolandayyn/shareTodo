@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var todos = require('./routes/todos');
+var friends = require('./routes/friends');
 
 var app = express();
 
@@ -19,7 +20,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', index);
 app.use('/api/v1/', todos);
+app.use('/api/v2/', friends);
 
-app.listen(3004, function(){
-    console.log('Server started on port 3004...');
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '/client/index.html'));
+});
+
+app.listen(5000, function(){
+    console.log('Server started on port 5000...');
 });
